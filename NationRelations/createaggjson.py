@@ -10,7 +10,7 @@ AGGREGATE_JS_DIR = Path("static/aggregates")
 COUNTRY_DATA_JS_PATH = Path("static/countryData.js")
 
 
-#sql = _SqlHandler()
+sql = _SqlHandler()
 COUNTRY_PAIRS = get_all_directed_pairs()
 
 
