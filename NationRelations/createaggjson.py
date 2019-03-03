@@ -82,6 +82,4 @@ def generate_feature_collection_files():
         f.close()
 
 
-if __name__ == '__main__':
-    fcb = FeatureCollectionBuilder()
-    print(fcb.get_feature_collection_str(Countries.UNITED_STATES))
+generate_feature_collection_files()
