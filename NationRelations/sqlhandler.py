@@ -56,10 +56,10 @@ class _SqlHandler:
         tname = self._get_directed_table_name(home_country, away_country)
         if isinstance(row, tuple):
             start = min(row)
+            p
             rows = max(row) - start
-            statement = "SELECT * FROM " + tname + " LIMIT " + start + "," + rows
 
-            self._cursor.execute(statement)
+            self._cursor.execute("SELECT * FROM " + tname + " LIMIT %s,%s", (start, rows))
             results_raw = self._cursor.fetchall()
             results = list()
             for r in results_raw:
@@ -67,9 +67,8 @@ class _SqlHandler:
                 results.append(d)
             return results
         else:
-            statement = "SELECT * FROM " + tname + " WHERE ROWNUM=" + row
 
-            self._cursor.execute(statement)
+            self._cursor.execute("SELECT * FROM " + tname + " WHERE ROWNUM=%s", (row))
             results_raw = self._cursor.fetchall()
             if len(results_raw) > 0:
                 results_raw = results_raw[0]
@@ -85,7 +84,7 @@ class _SqlHandler:
         self._db.commit()
 
     def get_aggregate_val(self, home_country: Countries, away_country: Countries):
-        statement = "SELECT * FROM " + self._agg_table_name + " WHERE from=" + home_country.get_iso_code() + " AND to=" + away_country.get_iso_code()
+        statement = "SELECT * FROM " + self._agg_table_name + " WHERE `from`='" + home_country.get_iso_code() + "' AND `to`='" + away_country.get_iso_code() + "'"
 
         self._cursor.execute(statement)
         result = self._cursor.fetchall()
