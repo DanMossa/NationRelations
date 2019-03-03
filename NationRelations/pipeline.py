@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from countries import get_country_name
-from countries import Countries
+from countries import get_country_name, Countries, get_all_directed_pairs
+from news import get_relevant_headlines
 from sqlhandler import _SqlHandler
 from analyzer import Analyzer
 

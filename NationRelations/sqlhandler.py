@@ -46,7 +46,6 @@ class _SqlHandler:
         self._cursor.execute("INSERT INTO `" + tname + "` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
                              (text, sentiment, magnitude, date))
         self._db.commit()
-        time.sleep(10)
 
     def get_sentiment_data(self, home_country: Countries, away_country: Countries, row):
         """Gets a sentiment data point(s)
