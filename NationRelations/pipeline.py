@@ -2,16 +2,13 @@
 import pymysql
 import countries
 from countries import Countries
-from analysis import Analysis
+from analyzer import Analyzer
 
 class Pipeline:
     def __init__(self):
         self.db = pymysql.connect("localhost","daniel","!nation!","countrydb" )
         self.analyzer = Analyzer()
         self.countries_list = get_all_directed_pairs()
-
-    def _insertToTable(self);
-
 
     def updateDirectedTables(self):
         for countryPair in self.countries_list:
@@ -22,3 +19,6 @@ class Pipeline:
             for headline in headlines:
                 text = headline[0]
                 date = headline[1]
+
+                sentimentTuple = self.analyzer.getSentiment(text)
+                recordTuple = (text, sentimentTuple[0], sentimentTuple[1], date)
