@@ -7,7 +7,7 @@ class _SqlHandler:
     _agg_table_name = "aggregate"
 
     _sql_check_table_template = "SELECT * FROM countrydb.tables WHERE table_name = {table_name}"
-    _sql_insert_template = "INSERT INTO '{table_name}' VALUES ({text}, {sentiment}, {magnitude}, {date})"
+    _sql_insert_template = "INSERT INTO {table_name} VALUES ({text}, {sentiment}, {magnitude}, {date})"
     _sql_get_range_template = "SELECT * FROM '{table_name}' LIMIT {start_index}, {row_count}"
     _sql_get_template = "SELECT * FROM '{table_name}' WHERE ROWNUM={index}"
     _sql_set_aggregate_template = "UPDATE " + _agg_table_name + " SET 'TITLE_SENTEMENT'={new_val} WHERE 'FROM' = '{home_country}' AND 'TO' = {away_country}"
