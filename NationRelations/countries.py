@@ -81,6 +81,19 @@ _country_name_map = {
     Countries.UNITED_STATES: "United States"
 }
 
+_country_3_codes = {
+    Countries.ARGENTINA: "ARG",
+    Countries.BRAZIL: "BRA",
+    Countries.CANADA: "CAN",
+    Countries.CHINA: "CHN",
+    Countries.CUBA: "CUB",
+    Countries.GERMANY: "DEU",
+    Countries.HONG_KONG: "HKG",
+    Countries.INDIA: "IND",
+    Countries.MEXICO: "MEX",
+    Countries.RUSSIA: "RUS",
+    Countries.UNITED_STATES: "USA"
+}
 
 _country_aliases = {
     Countries.ARGENTINA: {
@@ -169,6 +182,13 @@ def get_all_directed_pairs():
             if fromc != toc:
                 country_pairs.append((fromc, toc))
     return country_pairs
+
+
+def get_iso_3(country: Countries):
+    """Gets 3 digit ISO country code"""
+    if country in _country_3_codes.keys():
+        return _country_3_codes[country]
+    return ""
 
 
 if __name__ == '__main__':
