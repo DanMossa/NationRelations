@@ -23,7 +23,7 @@ class Pipeline:
         for record in records_list:
             score = record[1]
             summation += score
-        return summation
+        return (summation / len(records_list))
 
     #RETURNS: a list of tuples with format (TEXT, SCORE, MAGNITUDE, DATE)
     #which resembles the records to be stored in the directed SQL tables
