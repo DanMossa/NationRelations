@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from countries import get_country_name, Countries
+from countries import get_country_name, get_all_directed_pairs, Countries
+from news import get_relevant_headlines
 from sqlhandler import _SqlHandler
 from analyzer import Analyzer
 
@@ -23,7 +24,7 @@ class Pipeline:
             text = headline[0]
             date = headline[1]
 
-            sentiment_tuple = self.analyze_headline(text)
+            sentiment_tuple = self._analyze_headline(text)
             score = sentiment_tuple[0]
             magnitude = sentiment_tuple[1]
 
@@ -47,5 +48,5 @@ class Pipeline:
             records_to_add = self.__generate_directed_country_records(headlines_list)
 
             for record in records_to_add:
-                print("From: " + from_country + " TO: " + to_country)
+                print("From: " + get_country_name(from_country) + " TO: " + get_country_name(to_country))
                 self._write_to_directed_table(from_country, to_country, record)
