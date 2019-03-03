@@ -88,4 +88,3 @@ class _SqlHandler:
         if len(result) == 1:
             return result[0]
         return None
-
