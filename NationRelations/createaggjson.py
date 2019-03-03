@@ -51,7 +51,7 @@ class FeatureCollectionBuilder:
         fobj = copy.deepcopy(FEATURE_TEMPLATE)
         fobj["id"] = get_iso_3(objcountry)
         fobj["geometry"] = get_geometry_data(objcountry)
-        fobj["properties"]["score"] = sql.get_aggregate_val(objcountry, home_country)[4]
+        fobj["properties"]["score"] = sql.get_aggregate_val(objcountry, home_country)[3]
 
         return fobj
 
