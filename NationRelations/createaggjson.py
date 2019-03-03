@@ -20,7 +20,7 @@ def create_aggregate_json(country: Countries):
 
     json_str = json.dumps(aggregate_dict)
     out_path = AGGREGATE_JS_DIR.joinpath(iso3 + ".json")
-    f = open(str(out_path), "w+")
+    f = open(str(out_path), "a+")
     f.write(json_str)
     f.close()
 
