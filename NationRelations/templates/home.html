@@ -1,45 +1,59 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Leaflet GeoJSON Example</title>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"/>
-    <style type="text/css">
-        .leaflet-container {
-            background-color: #c5e8ff;
+    <title>A Leaflet map!</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+    <script src="../static/countryData.js"></script>
+    <style>
+        #map {
+            height: 100%
         }
     </style>
 </head>
-
 <body>
-<div id="map" style="width: 100%; height: 500px"></div>
 
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+<div id="map"></div>
+
 <script>
-    var myGeoJSONPath = "{{url_for('static', filename='custom.geo.json')}}";
-    var myCustomStyle = {
-        stroke: true,
-        fill: true,
-        fillColor: '#fff000',
-        fillOpacity: 1
-    };
-    $.getJSON(myGeoJSONPath, function (data) {
-        var map = L.map('map').setView([39.74739, -105], 4);
 
-        L.geoJson(data, {
-            clickable: true,
-            style: myCustomStyle
-        }).addTo(map);
-    });
+    var mapboxAccessToken = "pk.eyJ1IjoiZGFubW9zc2EiLCJhIjoiY2pzc2RuanV4MXNjYzQ0c3p5YXVwNTB5aSJ9.diFv8mJ8AdWcsEj2bhEblA";
+    var map = L.map('map').setView([37.8, -96], 4);
 
-    function onClick(e) {
-        alert(this.getLatLng());
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+        id: 'mapbox.light',
+        // attribution: ...
+    }).addTo(map);
+
+    L.geoJson(countryData).addTo(map);
+
+    function getColor(d) {
+        return d > 1000 ? '#800026' :
+            d > 500 ? '#BD0026' :
+                d > 200 ? '#E31A1C' :
+                    d > 100 ? '#FC4E2A' :
+                        d > 50 ? '#FD8D3C' :
+                            d > 20 ? '#FEB24C' :
+                                d > 10 ? '#FED976' :
+                                    '#FFEDA0';
     }
-    L.on("click", function (event) {
-        var clickedMarker = event.layer;
-        console.log(clickedMarker);
-    });
+
+    function style(feature) {
+        console.log(feature.properties);
+        return {
+            fillColor: getColor(feature.properties.density),
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.7
+        };
+    }
+
+    L.geoJson(countryData, {style: style}).addTo(map);
 </script>
 </body>
 </html>
