@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from countries import get_country_name, get_all_directed_pairs, Countries
-from news import get_relevant_headlines
+from countries import get_country_name
+from countries import Countries
 from sqlhandler import _SqlHandler
 from analyzer import Analyzer
 
@@ -14,6 +14,16 @@ class Pipeline:
     #RETURNS: tuple of format (SCORE, MAGNITUDE)
     def _analyze_headline(self, headline_text):
         return self.analyzer.getSentiment(headline_text)
+
+    def __get_records(from_country: Countries, to_country: Countries, range):
+        results = self.database.get_sentiment_data(from_country, to_country, range)
+
+    def __compute(self, records_list):
+        summation = 0
+        for record in records_list:
+            score = record[1]
+            summation += score
+        return summation
 
     #RETURNS: a list of tuples with format (TEXT, SCORE, MAGNITUDE, DATE)
     #which resembles the records to be stored in the directed SQL tables
@@ -37,6 +47,9 @@ class Pipeline:
     def _write_to_directed_table(self, from_country: Countries, to_country: Countries, record_tuple):
         self.database.store_sentiment_data(from_country, to_country, *record_tuple)
 
+    def _write_to_aggregate_table(self, from_country: Countries, to_country: Countries, value):
+        self.database.set_aggregate_val(from_country, to_country, value)
+
     #Takes the list of directed country pairs, retrieves the related headlines,
     #creates record-format tuples, then writes them to the database
     def process_directed_country_data(self):
@@ -48,5 +61,30 @@ class Pipeline:
             records_to_add = self.__generate_directed_country_records(headlines_list)
 
             for record in records_to_add:
-                print("From: " + get_country_name(from_country) + " TO: " + get_country_name(to_country))
                 self._write_to_directed_table(from_country, to_country, record)
+
+    def compute_aggregate_score(self, from_country: Countries, to_country: Countries):
+        records_list = list()
+        limit = 100
+
+        records_list = self.database.__get_records(from_country, to_country, limit)
+
+        if len(records_list) == 0:
+            self._write_to_aggregate_table(from_country, to_country, 0)
+        else:
+            new_score = self.__compute(records_list)
+            self._write_to_aggregate_table(from_country, to_country, new_score)
+
+    def compute_all_aggregate_scores(self):
+        for country_pair in self.countries_list:
+            from_country = country_pair[0]
+            to_country = country_pair[1]
+
+            records_list = self.database.__get_records(from_country, to_country, limit)
+
+            if len(records_list) == 0:
+                self._write_to_aggregate_table(from_country, to_country, 0)
+                continue
+            else:
+                new_score = self.__compute(records_list)
+                self._write_to_aggregate_table(from_country, to_country, new_score)

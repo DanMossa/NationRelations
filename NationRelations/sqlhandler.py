@@ -1,7 +1,7 @@
 import pymysql
 
 from countries import Countries
-
+import time
 
 class _SqlHandler:
     _agg_table_name = "aggregate"
@@ -13,6 +13,7 @@ class _SqlHandler:
     _sql_set_aggregate_template = "UPDATE " + _agg_table_name + " SET 'TITLE_SENTEMENT'={new_val} WHERE 'FROM' = '{home_country}' AND 'TO' = {away_country}"
     _sql_get_aggregate_template = "SELECT * FROM " + _agg_table_name + " WHERE 'FROM' = '{home_country}' AND 'TO' = {away_country}"
     """
+
     def __init__(self):
         self._db = pymysql.connect("localhost", "daniel", "!nation!", "countrydb")
         self._cursor = self._db.cursor()
@@ -32,10 +33,14 @@ class _SqlHandler:
 
     def store_sentiment_data(self, home_country: Countries, away_country: Countries, text, sentiment, magnitude, date):
         tname = self._get_directed_table_name(home_country, away_country)
-        statement = 'INSERT INTO ' + tname + ' (`text`,`sentiment`,`magnitude`,`date`) VALUES ("' + text + '",' + str(sentiment) + ',' + str(magnitude) + '"' + str(date) + '")'
 
-        self._cursor.execute(statement)
+        # statement = "INSERT INTO {table_name} (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES ({text}, {sentiment}, {magnitude}, {date})".format(
+        #     table_name=tname, text=text, sentiment=sentiment, magnitude=magnitude, date=date)
+
+        self._cursor.execute("INSERT INTO `ar_to_br` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
+                             (text, sentiment, magnitude, date))
         self._db.commit()
+        time.sleep(10)
 
     def get_sentiment_data(self, home_country: Countries, away_country: Countries, row):
         """Gets a sentiment data point(s)
