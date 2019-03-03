@@ -1,13 +1,14 @@
 #!/usr/bin/python3
-import pymysql
-import countries
+from countries import get_country_name
 from countries import Countries
 from analyzer import Analyzer
+from sqlhandler import _SqlHandler
 
 class Pipeline:
     def __init__(self):
-        self.db = pymysql.connect("localhost","daniel","!nation!","countrydb" )
+        self.db_handler = _SqlHandler()
         self.analyzer = Analyzer()
+        #List of pairs of Country enums
         self.countries_list = get_all_directed_pairs()
 
     #RETURNS: tuple of format (SCORE, MAGNITUDE)
@@ -19,7 +20,7 @@ class Pipeline:
     def _compile_directed_country_records(self, headlines_list):
         records_list = list()
 
-        for headline in headlines_list):
+        for headline in headlines_list:
             text = headline[0]
             date = headline[1]
 
