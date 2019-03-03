@@ -45,7 +45,7 @@ class Pipeline:
             to_country = country_pair[1]
 
             headlines_list = self._get_directed_pair_headlines(from_country, to_country)
-            records_to_add = self._compile_directed_country_records(headlines_list)
+            records_to_add = self._generate_directed_country_records(headlines_list)
 
             for record in records_to_add:
                 self._write_to_directed_table(from_country, to_country, record)
