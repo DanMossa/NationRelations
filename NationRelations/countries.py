@@ -78,7 +78,7 @@ _country_name_map = {
     Countries.INDIA: "India",
     Countries.MEXICO: "Mexico",
     Countries.RUSSIA: "Russia",
-    Countries.UNITED_STATES: "United State"
+    Countries.UNITED_STATES: "United States"
 }
 
 
