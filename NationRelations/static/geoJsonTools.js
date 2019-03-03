@@ -21,12 +21,6 @@ function resetHighlight(e) {
 }
 
 function colorOthers(e) {
-    // if (currentClickedCountry !== e.sourceTarget.feature.properties.name) {
-    //     currentClickedCountry = e.sourceTarget.feature.properties.name;
-    // map.fitBounds(e.target.getBounds());
-    // geojson.resetStyle(e.target);
-
-    removeMarkers();
 
     geojson = L.geoJson(countryData, {
         style: defaultStyle,
@@ -35,36 +29,47 @@ function colorOthers(e) {
     let clicked3Code = e.sourceTarget.feature.id;
     switch (clicked3Code) {
         case "ARG":
+            removeMarkers();
             L.geoJson(ARG, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "BRA":
+            removeMarkers();
             L.geoJson(BRA, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "CAN":
+            removeMarkers();
             L.geoJson(CAN, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "CHN":
+            removeMarkers();
             L.geoJson(CHN, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "CUB":
+            removeMarkers();
             L.geoJson(CUB, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "DEU":
+            removeMarkers();
             L.geoJson(DEU, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "HKG":
+            removeMarkers();
             L.geoJson(HKG, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "IND":
+            removeMarkers();
             L.geoJson(IND, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "MEX":
+            removeMarkers();
             L.geoJson(MEX, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "RUS":
+            removeMarkers();
             L.geoJson(RUS, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
         case "USA":
+            removeMarkers();
             L.geoJson(USA, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
     }
