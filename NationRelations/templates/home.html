@@ -28,6 +28,7 @@
         // attribution: ...
     }).addTo(map);
 
+    console.log(countryData.features.properties.density);
     L.geoJson(countryData).addTo(map);
 
     function getColor(d) {
