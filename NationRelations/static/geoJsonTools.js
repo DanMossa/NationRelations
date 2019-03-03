@@ -21,17 +21,31 @@ function resetHighlight(e) {
 }
 
 function colorOthers(e) {
-    if (currentClickedCountry !== e.sourceTarget.feature.properties.name) {
-        currentClickedCountry = e.sourceTarget.feature.properties.name;
-        // map.fitBounds(e.target.getBounds());
-        geojson.resetStyle(e.target);
-        L.geoJson(countryData, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+    // if (currentClickedCountry !== e.sourceTarget.feature.properties.name) {
+    //     currentClickedCountry = e.sourceTarget.feature.properties.name;
+    // map.fitBounds(e.target.getBounds());
 
-    }
+    removeMarkers();
+
+    L.geoJson(countryData, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+    // geojson.resetStyle(e.target);
+
+    // }
 }
 
+var removeMarkers = function () {
+    map.eachLayer(function (layer) {
+
+        if (layer.myTag && layer.myTag === "defaultLayer") {
+            map.removeLayer(layer)
+        }
+
+    });
+
+};
 
 function onEachFeature(feature, layer) {
+    layer.myTag = "defaultLayer";
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -61,8 +75,10 @@ function highlightFeature(e) {
 
 
 function getColor(d) {
-    if (d >= 769420) {
-        return 'A9A9A9';
+    if (d === 769420.0) {
+        return '#A9A9A9';
+    } else if (d === -769420.0) {
+        return '#FFFFFF';
     } else if (d >= 30.0) {
         return '#9DF781';
     } else if (30.0 > d && d >= 10.0) {
@@ -72,7 +88,7 @@ function getColor(d) {
     } else if (-10.0 > d && d >= -30.0) {
         return '#E96245';
     } else if (-30.0 > d) {
-        return '#A62700';
+        return '#7c1d00';
     } else {
         return '#FFFFFF';
     }
