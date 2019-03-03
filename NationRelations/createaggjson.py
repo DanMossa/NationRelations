@@ -49,7 +49,7 @@ class FeatureCollectionBuilder:
         self._main_obj = dict()
 
     def get_scaled_vals(self, focusCountry):
-        aggs = {c: sql.get_aggregate_val(c)[3] for c in Countries if c != focusCountry}
+        aggs = {c: sql.get_aggregate_val(c, focusCountry)[3] for c in Countries if c != focusCountry}
         vals = aggs.values()
         range_value = max(vals) - min(vals)
         range_value = range_value + range_value / 50
