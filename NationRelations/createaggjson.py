@@ -4,7 +4,7 @@ from pathlib import Path
 from countries import Countries, get_iso_3, get_all_directed_pairs
 from sqlhandler import _SqlHandler
 
-AGGREGATE_JS_DIR = Path("static/aggregates/")
+AGGREGATE_JS_DIR = Path("static/aggregates")
 
 sql = _SqlHandler()
 country_pairs = get_all_directed_pairs()
@@ -18,9 +18,11 @@ def create_aggregate_json(country: Countries):
     for c in relevant_pairs:
         aggregate_dict[get_iso_3(c)] = sql.get_aggregate_val(country, c)
 
-    out_path = AGGREGATE_JS_DIR.joinpath("".join(iso3 + ".json"))
-    with open(out_path, "w+") as f:
-        json.dump(aggregate_dict, f)
+    json_str = json.dumps(aggregate_dict)
+    out_path = AGGREGATE_JS_DIR.joinpath(iso3 + ".json")
+    f = open(str(out_path), "w")
+    f.write(json_str)
+    f.close()
 
 
 def create_all_jsons():
