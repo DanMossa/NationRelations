@@ -15,8 +15,8 @@ class Pipeline:
     def _analyze_headline(self, headline_text):
         return self.analyzer.getSentiment(headline_text)
 
-    def __get_records(from_country: Countries, to_country: Countries, range):
-        results = self.database.get_sentiment_data(from_country, to_country, range)
+    def __get_records(self, from_country: Countries, to_country: Countries, limit):
+        results = self.database.get_sentiment_data(from_country, to_country, limit)
 
     def __compute(self, records_list):
         summation = 0
@@ -67,7 +67,7 @@ class Pipeline:
         records_list = list()
         limit = 100
 
-        records_list = self.database.__get_records(from_country, to_country, limit)
+        records_list = self.__get_records(from_country, to_country, limit)
 
         if len(records_list) == 0:
             self._write_to_aggregate_table(from_country, to_country, 0)
