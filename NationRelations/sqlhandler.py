@@ -41,11 +41,10 @@ class _SqlHandler:
                              (text, sentiment, magnitude, date))
         self._db.commit()
 
-    def get_sentiment_data(self, home_country: Countries, away_country: Countries, row):
+    def get_sentiment_data(self, home_country: Countries, away_country: Countries):
         """Gets a sentiment data point(s)
 
-        :param row: either an int to get a single row, or a range in form (int, int)
-        :return: returns a list of 4 element tuples if a range is specified, else returns a single 4 element tuple
+        :return: returns a list of 4 element tuples
                 [
                 (text, sentiment, magnitude, date),
                 (text, sentiment, magnitude, date),
@@ -54,27 +53,11 @@ class _SqlHandler:
                 ]
         """
         tname = self._get_directed_table_name(home_country, away_country)
-        if isinstance(row, tuple):
-            start = min(row)
-            p
-            rows = max(row) - start
+        statement = "SELECT * FROM " + tname
+        self._cursor.execute(statement)
 
-            self._cursor.execute("SELECT * FROM " + tname + " LIMIT %s,%s", (start, rows))
-            results_raw = self._cursor.fetchall()
-            results = list()
-            for r in results_raw:
-                d = (results_raw["TEXT"], results_raw["SENTIMENT"], results_raw["MAGNITUDE"], results_raw["DATE"])
-                results.append(d)
-            return results
-        else:
-
-            self._cursor.execute("SELECT * FROM " + tname + " WHERE ROWNUM=%s", (row))
-            results_raw = self._cursor.fetchall()
-            if len(results_raw) > 0:
-                results_raw = results_raw[0]
-                result = (results_raw["TEXT"], results_raw["SENTIMENT"], results_raw["MAGNITUDE"], results_raw["DATE"])
-                return result
-        return None
+        result = self._cursor.fetchall()
+        return result
 
     def set_aggregate_val(self, home_country: Countries, away_country: Countries, new_val):
         """Sets the aggregate value for the specified directed country pair"""
