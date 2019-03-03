@@ -37,8 +37,9 @@ class _SqlHandler:
         # statement = "INSERT INTO {table_name} (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES ({text}, {sentiment}, {magnitude}, {date})".format(
         #     table_name=tname, text=text, sentiment=sentiment, magnitude=magnitude, date=date)
 
-        self._cursor.execute("INSERT INTO `" + tname + "` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
-                             (text, sentiment, magnitude, date))
+        self._cursor.execute(
+            "INSERT INTO `" + tname + "` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
+            (text, sentiment, magnitude, date))
         self._db.commit()
 
     def get_sentiment_data(self, home_country: Countries, away_country: Countries):
@@ -61,9 +62,11 @@ class _SqlHandler:
 
     def set_aggregate_val(self, home_country: Countries, away_country: Countries, new_val):
         """Sets the aggregate value for the specified directed country pair"""
-        statement = "UPDATE " + self._agg_table_name + " SET `title_sentiment`=" + new_val + " WHERE `from`=" + home_country.get_iso_code() + " AND `to`=" + away_country.get_iso_code()
-        
-        self._cursor.execute(statement)
+        # statement = "UPDATE " + self._agg_table_name + " SET `title_sentiment`=" + new_val + " WHERE `from`=" + home_country.get_iso_code() + " AND `to`=" + away_country.get_iso_code()
+        self._cursor.execute("UPDATE " + self._agg_table_name + " SET `title_sentiment`=%s WHERE `from`=%s AND `to`=%s",
+                             (new_val, home_country.get_iso_code(), away_country.get_iso_code()))
+
+        # self._cursor.execute(statement)
         self._db.commit()
 
     def get_aggregate_val(self, home_country: Countries, away_country: Countries):
