@@ -2,6 +2,7 @@
 from countries import get_country_name
 from countries import Countries
 from sqlhandler import _SqlHandler
+from analyzer import Analyzer
 
 class Pipeline:
     def __init__(self):
