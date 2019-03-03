@@ -6,7 +6,7 @@ from eventregistry import EventRegistry, QueryArticles, QueryItems, ComplexArtic
 from countries import Countries, CountryAliases, get_country_alias, get_country_language
 
 # Init
-_api = EventRegistry(apiKey=json.load(open("NationRelations/res/keys.json", 'r'))["news"])
+_api = EventRegistry(apiKey=json.load(open("res/keys.json", 'r'))["news"])
 _location_uris = {c: _api.getLocationUri(get_country_alias(c, CountryAliases.NAME)) for c in Countries}
 
 
@@ -40,7 +40,7 @@ def get_relevant_headlines(home_country: Countries, target_country: Countries):
         "sourceLocationUri": _location_uris[home_country],
         "dateStart": _get_month_ago(),
         "keywordsLoc": "body,title",
-        "isDuplicateFilter": "keepOnlyDuplicates",
+        "isDuplicateFilter": "skipDuplicates",
         "dataType": ["news", "pr"]
     }
     query = QueryArticles(**qparams)
