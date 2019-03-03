@@ -61,7 +61,9 @@ function highlightFeature(e) {
 
 
 function getColor(d) {
-    if (d >= 30.0) {
+    if (d >= 769420) {
+        return 'A9A9A9';
+    } else if (d >= 30.0) {
         return '#9DF781';
     } else if (30.0 > d && d >= 10.0) {
         return '#CBFFC0';

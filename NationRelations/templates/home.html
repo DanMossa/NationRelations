@@ -23,13 +23,13 @@
             width: 18px;
             height: 18px;
             float: left;
-            margin-right: 8px;
+            margin-right: 15px;
             opacity: 0.7;
         }
     </style>
 </head>
 <body>
-
+<span><h1>HEI</h1></span>
 <div id="map"></div>
 
 <script>
@@ -55,7 +55,7 @@
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 10, 20, 50, 100],
+            grades = [-30, -10, 0, 10, 30],
             labels = ["More Negative", "Negative", "Neutral", "Positive", "More Positive"];
 
         // loop through our density intervals and generate a label with a colored square for each interval
