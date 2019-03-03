@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-from countries import get_country_name
-from countries import Countries
+from countries import get_country_name, Countries
 from sqlhandler import _SqlHandler
 from analyzer import Analyzer
 
@@ -48,4 +47,5 @@ class Pipeline:
             records_to_add = self.__generate_directed_country_records(headlines_list)
 
             for record in records_to_add:
+                print("From: " + from_country + " TO: " + to_country)
                 self._write_to_directed_table(from_country, to_country, record)
