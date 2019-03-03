@@ -24,11 +24,53 @@ function colorOthers(e) {
     // if (currentClickedCountry !== e.sourceTarget.feature.properties.name) {
     //     currentClickedCountry = e.sourceTarget.feature.properties.name;
     // map.fitBounds(e.target.getBounds());
+    // geojson.resetStyle(e.target);
 
     removeMarkers();
-
-    L.geoJson(countryData, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
-    // geojson.resetStyle(e.target);
+    geojson = L.geoJson(countryData, {
+        style: defaultStyle,
+        onEachFeature: onEachFeature
+    }).addTo(map);
+    let clicked3Code = e.sourceTarget.feature.id;
+    switch (clicked3Code) {
+        case "ARG":
+            L.geoJson(ARG, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "BRA":
+            L.geoJson(BRA, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "CAN":
+            L.geoJson(CAN, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "CHN":
+            L.geoJson(CHN, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "CUB":
+            L.geoJson(CUB, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "DEU":
+            L.geoJson(DEU, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "HKG":
+            L.geoJson(HKG, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "IND":
+            L.geoJson(IND, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "MEX":
+            L.geoJson(MEX, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "RUS":
+            L.geoJson(RUS, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+        case "USA":
+            L.geoJson(USA, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
+            break;
+    }
+    // if (clicked3Code === "ARG") {
+    //     console.log(clicked3Code);
+    //
+    // }
 
     // }
 }
@@ -65,7 +107,7 @@ function highlightFeature(e) {
         weight: 4,
         color: '#666',
         dashArray: '',
-        fillOpacity: 0.7
+        fillOpacity: 0.4
     });
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
