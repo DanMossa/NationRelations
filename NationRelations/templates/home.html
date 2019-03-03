@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>A Leaflet map!</title>
+    <title>NationRelations</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -13,6 +13,19 @@
         #map {
             height: 100%
         }
+
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -22,19 +35,40 @@
 <script>
 
     var mapboxAccessToken = "pk.eyJ1IjoiZGFubW9zc2EiLCJhIjoiY2pzc2RuanV4MXNjYzQ0c3p5YXVwNTB5aSJ9.diFv8mJ8AdWcsEj2bhEblA";
-    var map = L.map('map').setView([37.8, -96], 4);
+    var map = L.map('map').setView([37.8, -96], 2.5);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
         id: 'mapbox.light',
         // attribution: ...
     }).addTo(map);
-    
-    L.geoJson(countryData, {style: style}).addTo(map);
+
+    L.geoJson(countryData, {style: defaultStyle}).addTo(map);
 
     geojson = L.geoJson(countryData, {
-        style: style,
+        style: defaultStyle,
         onEachFeature: onEachFeature
     }).addTo(map);
+
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [0, 10, 20, 50, 100],
+            labels = ["More Negative", "Negative", "Neutral", "Positive", "More Positive"];
+
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
 
 </script>
 </body>
