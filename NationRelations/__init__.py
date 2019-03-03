@@ -7,9 +7,10 @@ app = Flask(__name__)
 def hello():
     return render_template("home.html")
 
-@app.route("/daniel")
-def daniel():
-    return "Daniel loves flask with all his heart"
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
