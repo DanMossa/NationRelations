@@ -23,6 +23,12 @@ class Countries(Enum):
         return self.value
 
 
+class CountryAliases(Enum):
+    NAME = "name"
+    LEADER = "leader"
+    CAPITOL = "capitol"
+
+
 class Languages(Enum):
     """ISO 639-1 codes available in News API"""
     ARABIC = "ar"
@@ -78,59 +84,59 @@ _country_name_map = {
 
 _country_aliases = {
     Countries.ARGENTINA: {
-        "name": _country_name_map[Countries.ARGENTINA],
-        "leader": "Mauricio Macri",
-        "capitol": "Buenos Aires"
+        CountryAliases.NAME: _country_name_map[Countries.ARGENTINA],
+        CountryAliases.LEADER: "Mauricio Macri",
+        CountryAliases.CAPITOL: "Buenos Aires"
     },
     Countries.BRAZIL: {
-        "name": _country_name_map[Countries.BRAZIL],
-        "leader": "Jair Bolsonaro",
-        "capitol": "Brasília"
+        CountryAliases.NAME: _country_name_map[Countries.BRAZIL],
+        CountryAliases.LEADER: "Jair Bolsonaro",
+        CountryAliases.CAPITOL: "Brasília"
     },
     Countries.CANADA: {
-        "name": _country_name_map[Countries.CANADA],
-        "leader": "Justin Trudeau",
-        "capitol": "Ottawa"
+        CountryAliases.NAME: _country_name_map[Countries.CANADA],
+        CountryAliases.LEADER: "Justin Trudeau",
+        CountryAliases.CAPITOL: "Ottawa"
     },
     Countries.CHINA: {
-        "name": _country_name_map[Countries.CHINA],
-        "leader": "Xi Jinping",
-        "capitol": "Beijing"
+        CountryAliases.NAME: _country_name_map[Countries.CHINA],
+        CountryAliases.LEADER: "Xi Jinping",
+        CountryAliases.CAPITOL: "Beijing"
     },
     Countries.CUBA: {
-        "name": _country_name_map[Countries.CUBA],
-        "leader": "Miguel Díaz-Canel",
-        "capitol": "Havana"
+        CountryAliases.NAME: _country_name_map[Countries.CUBA],
+        CountryAliases.LEADER: "Miguel Díaz-Canel",
+        CountryAliases.CAPITOL: "Havana"
     },
     Countries.GERMANY: {
-        "name": _country_name_map[Countries.GERMANY],
-        "leader": "Frank-Walter Steinmeier",
-        "capitol": "Berlin"
+        CountryAliases.NAME: _country_name_map[Countries.GERMANY],
+        CountryAliases.LEADER: "Frank-Walter Steinmeier",
+        CountryAliases.CAPITOL: "Berlin"
     },
     Countries.HONG_KONG: {
-        "name": _country_name_map[Countries.HONG_KONG],
-        "leader": "Carrie Lam",
-        "capitol": "Hong Kong central"
+        CountryAliases.NAME: _country_name_map[Countries.HONG_KONG],
+        CountryAliases.LEADER: "Carrie Lam",
+        CountryAliases.CAPITOL: "Hong Kong central"
     },
     Countries.INDIA: {
-        "name": _country_name_map[Countries.INDIA],
-        "leader": "Ram Nath Kovind",
-        "capitol": "New Delhi"
+        CountryAliases.NAME: _country_name_map[Countries.INDIA],
+        CountryAliases.LEADER: "Ram Nath Kovind",
+        CountryAliases.CAPITOL: "New Delhi"
     },
     Countries.MEXICO: {
-        "name": _country_name_map[Countries.MEXICO],
-        "leader": "Andrés Manuel López Obrador",
-        "capitol": "Mexico City"
+        CountryAliases.NAME: _country_name_map[Countries.MEXICO],
+        CountryAliases.LEADER: "Andrés Manuel López Obrador",
+        CountryAliases.CAPITOL: "Mexico City"
     },
     Countries.RUSSIA: {
-        "name": _country_name_map[Countries.RUSSIA],
-        "leader": "Vladimir Putin",
-        "capitol": "Moscow"
+        CountryAliases.NAME: _country_name_map[Countries.RUSSIA],
+        CountryAliases.LEADER: "Vladimir Putin",
+        CountryAliases.CAPITOL: "Moscow"
     },
     Countries.UNITED_STATES: {
-        "name": _country_name_map[Countries.UNITED_STATES],
-        "leader": "Donald Trump",
-        "capitol": "Washington D.C."
+        CountryAliases.NAME: _country_name_map[Countries.UNITED_STATES],
+        CountryAliases.LEADER: "Donald Trump",
+        CountryAliases.CAPITOL: "Washington D.C."
     }
 }
 
@@ -146,3 +152,11 @@ def get_country_name(country: Countries):
         return _country_name_map[country]
     return None
 
+
+def get_country_alias(country: Countries, alias_type: CountryAliases):
+    """Gets the alias for the specified country and alias type"""
+    if country in _country_aliases:
+        target_country = _country_aliases[country]
+        if alias_type in target_country.keys():
+            return target_country[alias_type]
+    return None
