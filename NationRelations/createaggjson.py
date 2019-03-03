@@ -10,7 +10,7 @@ AGGREGATE_JS_DIR = Path("static/aggregates")
 COUNTRY_DATA_JS_PATH = Path("static/countryData.js")
 
 
-sql = _SqlHandler()
+#sql = _SqlHandler()
 COUNTRY_PAIRS = get_all_directed_pairs()
 
 
@@ -27,7 +27,7 @@ COUNTRY_GEODATA = parse_country_geodata()
 def get_geometry_data(country:Countries):
     iso3 = get_iso_3(country)
     for c in COUNTRY_GEODATA:
-        if c["id"] is iso3:
+        if c["id"] == iso3:
             return c["geometry"]
     return None
 
