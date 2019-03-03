@@ -15,13 +15,17 @@ class Pipeline:
     def _analyze_headline(self, headline_text):
         return self.analyzer.getSentiment(headline_text)
 
-    def __get_records(self, from_country: Countries, to_country: Countries, limit):
-        results = self.database.get_sentiment_data(from_country, to_country, limit)
+    def __get_records(self, from_country: Countries, to_country: Countries):
+        results = self.database.get_sentiment_data(from_country, to_country)
+        return results
 
     def __compute(self, records_list):
         summation = 0
+        if records_list is None:
+            return
         for record in records_list:
-            score = record[1]
+            print(record)
+            score = record[2]
             summation += score
         return (summation / len(records_list))
 
@@ -67,24 +71,19 @@ class Pipeline:
         records_list = list()
         limit = 100
 
-        records_list = self.__get_records(from_country, to_country, limit)
+        records_list = self.__get_records(from_country, to_country)
 
-        if len(records_list) == 0:
-            self._write_to_aggregate_table(from_country, to_country, 0)
-        else:
-            new_score = self.__compute(records_list)
-            self._write_to_aggregate_table(from_country, to_country, new_score)
+        new_score = self.__compute(records_list)
+        print(new_score)
+        self._write_to_aggregate_table(from_country, to_country, new_score)
 
     def compute_all_aggregate_scores(self):
         for country_pair in self.countries_list:
             from_country = country_pair[0]
             to_country = country_pair[1]
 
-            records_list = self.database.__get_records(from_country, to_country, limit)
+            records_list = self.__get_records(from_country, to_country)
 
-            if len(records_list) == 0:
-                self._write_to_aggregate_table(from_country, to_country, 0)
-                continue
-            else:
-                new_score = self.__compute(records_list)
-                self._write_to_aggregate_table(from_country, to_country, new_score)
+            new_score = self.__compute(records_list)
+            print(type(new_score))
+            self._write_to_aggregate_table(from_country, to_country, new_score)

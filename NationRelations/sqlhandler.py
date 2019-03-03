@@ -61,8 +61,8 @@ class _SqlHandler:
 
     def set_aggregate_val(self, home_country: Countries, away_country: Countries, new_val):
         """Sets the aggregate value for the specified directed country pair"""
-        statement = "UPDATE " + self._agg_table_name + " SET title_sentiment=" + new_val + " WHERE from=" + home_country.get_iso_code() + " AND to=" + away_country.get_iso_code()
-
+        statement = "UPDATE " + self._agg_table_name + " SET `title_sentiment`=" + new_val + " WHERE `from`=" + home_country.get_iso_code() + " AND `to`=" + away_country.get_iso_code()
+        
         self._cursor.execute(statement)
         self._db.commit()
 
