@@ -1,13 +1,13 @@
 import json
 from pathlib import Path
 
-from countries import Countries, get_iso_3
+from countries import Countries, get_iso_3, get_all_directed_pairs
 from sqlhandler import _SqlHandler
 
 AGGREGATE_JS_DIR = Path("static/aggregates/")
 
 sql = _SqlHandler()
-country_pairs = countries.get_all_directed_pairs()
+country_pairs = get_all_directed_pairs()
 
 
 def create_aggregate_json(country: Countries):
