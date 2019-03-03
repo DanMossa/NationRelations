@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-from countries import get_country_name
+from countries import get_all_directed_pairs
 from countries import Countries
 from sqlhandler import _SqlHandler
+from news import get_relevant_headlines
 from analyzer import Analyzer
 
 class Pipeline:
