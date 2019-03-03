@@ -5,10 +5,8 @@ from pathlib import Path
 from countries import Countries, get_iso_3, get_all_directed_pairs
 from sqlhandler import _SqlHandler
 
-
 AGGREGATE_JS_DIR = Path("static/aggregates")
 COUNTRY_DATA_JS_PATH = Path("static/countryData.js")
-
 
 sql = _SqlHandler()
 COUNTRY_PAIRS = get_all_directed_pairs()
@@ -23,8 +21,12 @@ def parse_country_geodata():
     j = json.loads(country_geo)
 
     return j["features"]
+
+
 COUNTRY_GEODATA = parse_country_geodata()
-def get_geometry_data(country:Countries):
+
+
+def get_geometry_data(country: Countries):
     iso3 = get_iso_3(country)
     for c in COUNTRY_GEODATA:
         if c["id"] == iso3:
@@ -46,12 +48,24 @@ class FeatureCollectionBuilder:
     def __init__(self):
         self._main_obj = dict()
 
-    def generate_feature_template(self, objcountry: Countries, home_country: Countries):
+    def get_scaled_vals(self, focusCountry):
+        aggs = {c: sql.get_aggregate_val(c)[3] for c in Countries if c != focusCountry}
+        vals = aggs.values()
+        range_value = max(vals) - min(vals)
+        range_value = range_value + range_value / 50
+        min_value = min(vals) - range_value / 100
+
+        # subtract the minimum value and divide by the range
+        for c in aggs:
+            aggs[c] = (aggs[c] - min_value) / range_value
+        return aggs
+
+    def generate_feature_template(self, objcountry: Countries, aggregate_val):
         """Takes an in instance of FEATURE_TEMPLATE and the corresponding country"""
         fobj = copy.deepcopy(FEATURE_TEMPLATE)
         fobj["id"] = get_iso_3(objcountry)
         fobj["geometry"] = get_geometry_data(objcountry)
-        fobj["properties"]["score"] = sql.get_aggregate_val(objcountry, home_country)[3]
+        fobj["properties"]["score"] = aggregate_val
 
         return fobj
 
@@ -60,10 +74,11 @@ class FeatureCollectionBuilder:
             "type": "FeatureCollection",
             "features": {}
         }
+        scaled_vals = self.get_scaled_vals(home_country)
         features = list()
         for c in Countries:
             if c is not home_country:
-                features.append(self.generate_feature_template(c, home_country))
+                features.append(self.generate_feature_template(c, scaled_vals[c]))
 
         js_obj["features"] = features
 
@@ -77,6 +92,8 @@ class FeatureCollectionBuilder:
 
 
 FEATURE_COLLECTION_JS_TEMPLATE = "let {iso3} = {feature_collection_str}"
+
+
 def generate_feature_collection_files():
     fcb = FeatureCollectionBuilder()
     for c in Countries:

@@ -135,15 +135,15 @@ function getColor(d) {
         return '#373737';
     } else if (d === -769420.0) {
         return '#FFFFFF';
-    } else if (d >= 8.0) {
+    } else if (d >= 0.8) {
         return '#9DF781';
-    } else if (8.0 > d && d >= 0.6) {
+    } else if (0.8 > d && d >= 0.6) {
         return '#CBFFC0';
     } else if (0.6 > d && d >= 0.4) {
         return '#FEE46E';
-    } else if (4.0 > d && d >= 2.0) {
+    } else if (0.4 > d && d >= 0.2) {
         return '#E96245';
-    } else if (2.0 > d) {
+    } else if (0.2 > d) {
         return '#7c1d00';
     } else {
         return '#FFFFFF';
