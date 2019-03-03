@@ -27,6 +27,7 @@ function colorOthers(e) {
     // geojson.resetStyle(e.target);
 
     removeMarkers();
+
     geojson = L.geoJson(countryData, {
         style: defaultStyle,
         onEachFeature: onEachFeature
@@ -66,6 +67,19 @@ function colorOthers(e) {
         case "USA":
             L.geoJson(USA, {style: colorOthersStyle, onEachFeature: onEachFeature}).addTo(map);
             break;
+    }
+    var layer = e.target;
+
+    layer.setStyle({
+        fillColor: '#0000FF',
+        weight: 4,
+        color: '#12f345',
+        dashArray: '',
+        fillOpacity: 0.4
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
     }
     // if (clicked3Code === "ARG") {
     //     console.log(clicked3Code);
@@ -118,18 +132,18 @@ function highlightFeature(e) {
 
 function getColor(d) {
     if (d === 769420.0) {
-        return '#A9A9A9';
+        return '#373737';
     } else if (d === -769420.0) {
         return '#FFFFFF';
-    } else if (d >= 30.0) {
+    } else if (d >= 8.0) {
         return '#9DF781';
-    } else if (30.0 > d && d >= 10.0) {
+    } else if (8.0 > d && d >= 0.6) {
         return '#CBFFC0';
-    } else if (10.0 > d && d >= -10.0) {
+    } else if (0.6 > d && d >= 0.4) {
         return '#FEE46E';
-    } else if (-10.0 > d && d >= -30.0) {
+    } else if (4.0 > d && d >= 2.0) {
         return '#E96245';
-    } else if (-30.0 > d) {
+    } else if (2.0 > d) {
         return '#7c1d00';
     } else {
         return '#FFFFFF';
@@ -143,8 +157,8 @@ function defaultStyle(feature) {
         fillColor: 'white',
         weight: 2,
         opacity: 1,
-        color: 'white',
-        dashArray: '3',
+        color: 'black',
+        dashArray: '4',
         fillOpacity: 0.2
     };
 }
@@ -155,8 +169,8 @@ function colorOthersStyle(feature) {
         fillColor: getColor(feature.properties.score),
         weight: 2,
         opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.2
+        color: 'black',
+        dashArray: '',
+        fillOpacity: 0.5
     };
 }
