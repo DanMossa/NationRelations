@@ -1,7 +1,7 @@
 from google.cloud import language
 from google.cloud.language import enums
 
-class Analysis:
+class Analyzer:
 	#PRIVATE
 	#RETURNS: JSON object containing overall sentiment and an array of sentences
 	#with individual sentences
