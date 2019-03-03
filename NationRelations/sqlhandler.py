@@ -1,7 +1,7 @@
 import pymysql
 
-from countries import Countries
-import time
+from countries import Countries, get_all_directed_pairs
+
 
 class _SqlHandler:
     _agg_table_name = "aggregate"
@@ -37,10 +37,9 @@ class _SqlHandler:
         # statement = "INSERT INTO {table_name} (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES ({text}, {sentiment}, {magnitude}, {date})".format(
         #     table_name=tname, text=text, sentiment=sentiment, magnitude=magnitude, date=date)
 
-        self._cursor.execute("INSERT INTO `ar_to_br` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
+        self._cursor.execute("INSERT INTO `" + tname + "` (`TEXT`,`SENTIMENT`,`MAGNITUDE`,`DATE`) VALUES (%s, %s, %s, %s)",
                              (text, sentiment, magnitude, date))
         self._db.commit()
-        time.sleep(10)
 
     def get_sentiment_data(self, home_country: Countries, away_country: Countries, row):
         """Gets a sentiment data point(s)

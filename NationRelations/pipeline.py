@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from countries import get_country_name
-from countries import Countries
+from countries import get_country_name, Countries, get_all_directed_pairs
+from news import get_relevant_headlines
 from sqlhandler import _SqlHandler
 from analyzer import Analyzer
 
@@ -23,7 +23,7 @@ class Pipeline:
         for record in records_list:
             score = record[1]
             summation += score
-        return summation
+        return (summation / len(records_list))
 
     #RETURNS: a list of tuples with format (TEXT, SCORE, MAGNITUDE, DATE)
     #which resembles the records to be stored in the directed SQL tables

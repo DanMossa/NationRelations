@@ -40,7 +40,7 @@ def get_relevant_headlines(home_country: Countries, target_country: Countries):
         "sourceLocationUri": _location_uris[home_country],
         "dateStart": _get_month_ago(),
         "keywordsLoc": "body,title",
-        "isDuplicateFilter": "keepOnlyDuplicates",
+        "isDuplicateFilter": "skipDuplicates",
         "dataType": ["news", "pr"]
     }
     query = QueryArticles(**qparams)
