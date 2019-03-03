@@ -8,6 +8,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def hello():
     return render_template("home.html")
 
+
 @app.route("/about")
 def about():
     return render_template("about.html")
