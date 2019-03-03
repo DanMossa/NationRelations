@@ -33,6 +33,6 @@ class Analysis:
 		magnitude = documentSentiment.magnitude
 		return (score, magnitude)
 
-	if __name__ == '__main__':
-		self.language_language_client = language.LanguageServiceCliet()
+	def __init__(self):
+		self.language_client = language.LanguageServiceClient.from_service_account_json("NationRelations-58671cac34a3.json")
 		self.documentType_ = enums.Document.Type.PLAIN_TEXT
