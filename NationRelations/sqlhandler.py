@@ -22,7 +22,7 @@ class _SqlHandler:
 
     def table_exists(self, table_name):
         """Checks if a table is present in the database"""
-        statement = "SHOW TABLES LIKE " + table_name
+        statement = "SHOW TABLES FROM countrydb LIKE '" + table_name + "'"
 
         self._cursor.execute(statement)
         result = self._cursor.fetchall()
@@ -32,7 +32,7 @@ class _SqlHandler:
 
     def store_sentiment_data(self, home_country: Countries, away_country: Countries, text, sentiment, magnitude, date):
         tname = self._get_directed_table_name(home_country, away_country)
-        statement = "INSERT INTO " + tname + " (`text`,`sentiment`,`magnitude`,`date`) VALUES (\"" + text + "\", " + sentiment + ", " + magnitude + "\"" + date + "\")"
+        statement = 'INSERT INTO ' + tname + ' (`text`,`sentiment`,`magnitude`,`date`) VALUES ("' + text + '",' + str(sentiment) + ',' + str(magnitude) + '"' + str(date) + '")'
 
         self._cursor.execute(statement)
         self._db.commit()
