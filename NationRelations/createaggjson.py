@@ -22,8 +22,14 @@ def parse_country_geodata():
     country_geo = country_js[country_js.index(" = ") + 3:-1]
     j = json.loads(country_geo)
 
-    return j
+    return j["features"]
 COUNTRY_GEODATA = parse_country_geodata()
+def get_geometry_data(country:Countries):
+    iso3 = get_iso_3(country)
+    for c in COUNTRY_GEODATA:
+        if c["id"] is iso3:
+            return c["geometry"]
+    return None
 
 
 FEATURE_TEMPLATE = {
@@ -31,7 +37,8 @@ FEATURE_TEMPLATE = {
     "id": None,  # 3 character iso code all upper
     "properties": {
         "score": None  # score 0.0 to 1.0 representing sentiment
-    }
+    },
+    "geometry": None
 }
 
 
@@ -43,6 +50,7 @@ class FeatureCollectionBuilder:
         """Takes an in instance of FEATURE_TEMPLATE and the corresponding country"""
         fobj = copy.deepcopy(FEATURE_TEMPLATE)
         fobj["id"] = get_iso_3(objcountry)
+        fobj["geometry"] = get_geometry_data(objcountry)
         fobj["properties"]["score"] = sql.get_aggregate_val(objcountry, home_country)
 
         return fobj
