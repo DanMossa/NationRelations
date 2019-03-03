@@ -21,7 +21,7 @@ class Analyzer:
 	#RETURNS: the overall Magnitude of textToAnalyze
 	def getSentimentMagnitude(self, textToAnalyze):
 		analysisResponse = self.__analyze(textToAnalyze)
-		documentSentiment = analy__sisResponse.document_sentiment
+		documentSentiment = analysisResponse.document_sentiment
 		return documentSentiment.magntiude
 
 
