@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-from countries import get_all_directed_pairs
+from countries import get_country_name
 from countries import Countries
 from sqlhandler import _SqlHandler
-from news import get_relevant_headlines
 from analyzer import Analyzer
 
 class Pipeline:
@@ -46,7 +45,7 @@ class Pipeline:
             to_country = country_pair[1]
 
             headlines_list = self._get_directed_pair_headlines(from_country, to_country)
-            records_to_add = self._generate_directed_country_records(headlines_list)
+            records_to_add = self.__generate_directed_country_records(headlines_list)
 
             for record in records_to_add:
                 self._write_to_directed_table(from_country, to_country, record)
