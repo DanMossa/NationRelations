@@ -19,9 +19,9 @@ def create_aggregate_json(country: Countries):
         aggregate_dict[get_iso_3(c)] = sql.get_aggregate_val(country, c)
 
     json_str = json.dumps(aggregate_dict)
-    out_path = AGGREGATE_JS_DIR.joinpath(iso3 + ".json")
+    out_path = AGGREGATE_JS_DIR.joinpath(iso3 + ".js")
     f = open(str(out_path), "w+")
-    f.write(json_str)
+    f.write("let " + iso3 + " = " + json_str)
     f.close()
 
 
