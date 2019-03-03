@@ -1,12 +1,6 @@
 import pymysql
 
 from countries import Countries, get_all_directed_pairs
-import time
-
-
-def db_init():
-    pairs = get_all_directed_pairs()
-
 
 
 class _SqlHandler:
