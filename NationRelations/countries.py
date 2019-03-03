@@ -160,3 +160,19 @@ def get_country_alias(country: Countries, alias_type: CountryAliases):
         if alias_type in target_country.keys():
             return target_country[alias_type]
     return None
+
+
+def get_all_directed_pairs():
+    country_pairs = list()
+    for fromc in Countries:
+        for toc in Countries:
+            if fromc != toc:
+                country_pairs.append((fromc, toc))
+    return country_pairs
+
+
+if __name__ == '__main__':
+    pairs = get_all_directed_pairs()
+    for p in pairs:
+        print(p)
+    print(len(pairs))
