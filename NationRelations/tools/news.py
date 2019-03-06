@@ -3,7 +3,7 @@ import datetime
 
 from eventregistry import EventRegistry, QueryArticles, QueryItems, ComplexArticleQuery
 
-from countries import Countries, CountryAliases, get_country_alias, get_country_language
+from nationrelations.countries import Countries, CountryAliases, get_country_alias, get_country_language
 
 # Init
 _api = EventRegistry(apiKey=json.load(open("res/keys.json", 'r'))["news"])

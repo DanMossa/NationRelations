@@ -1,6 +1,6 @@
 import pymysql
 
-from countries import Countries, get_all_directed_pairs
+from nationrelations.countries import Countries, get_all_directed_pairs
 
 
 class _SqlHandler:

@@ -1,5 +1,6 @@
 from google.cloud import language
 from google.cloud.language import enums
+import logging
 
 class Analyzer:
 	#PRIVATE
@@ -25,7 +26,7 @@ class Analyzer:
 		return documentSentiment.magntiude
 
 
-	#RETURNS: a tuple with format (SCORE, MAGNITUDE) of the overall textToAnalyze
+	#RETURNS: a tuple with format (SCORE, MAG`NITUDE) of the overall textToAnalyze
 	def getSentiment(self, textToAnalyze):
 		analysisResponse = self.__analyze(textToAnalyze)
 		documentSentiment = analysisResponse.document_sentiment
@@ -34,5 +35,6 @@ class Analyzer:
 		return (score, magnitude)
 
 	def __init__(self):
-		self.language_client = language.LanguageServiceClient.from_service_account_json("NationRelations-58671cac34a3.json")
+		self.language_client = language.LanguageServiceClient.from_service_account_json("lang_key.json")
 		self.documentType_ = enums.Document.Type.PLAIN_TEXT
+		
